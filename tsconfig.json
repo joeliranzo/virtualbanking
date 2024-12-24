@@ -3,5 +3,12 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "../dist/widget-a/widget-a.umd.js": ["src/types/widget-a.d.ts"],
+      "../dist/widget-b/widget-b.umd.js": ["src/types/widget-b.d.ts"]
+    }
+  }
 }

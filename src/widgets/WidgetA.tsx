@@ -29,3 +29,4 @@ const WidgetA: React.FC = () => {
 };
 
 export default WidgetA;
+

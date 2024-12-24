@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:widget-a": "vite build --mode widget-a",
+    "build:widget-b": "vite build --mode widget-b",
+    "build:widgets": "npm run build:widget-a && npm run build:widget-b",
+    "build": "tsc -b && vite build && npm run build:widgets"
   },
   "dependencies": {
     "react": "^18.3.1",

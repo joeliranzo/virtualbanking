@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { onMessage } from '../utils/communication';
+import { onMessage, offMessage } from '../utils/communication';
 
 const WidgetB: React.FC = () => {
-  const [receivedMessages, setReceivedMessages] = useState<string[]>([]);
+    const [receivedMessages, setReceivedMessages] = useState<string[]>([]);
 
-  useEffect(() => {
-    // Registrar un callback para manejar los mensajes recibidos
-    onMessage((message) => {
-      setReceivedMessages((prevMessages) => [...prevMessages, message]);
-    });
-  }, []);
+    useEffect(() => {
+        const handleMessage = (message: string) => {
+            setReceivedMessages((prevMessages) => [...prevMessages, message]);
+        };
+        onMessage(handleMessage);
+        return () => {
+            offMessage(handleMessage);
+        };
+    }, []);
 
   return (
     <div style={{ border: '1px solid black', padding: '20px', maxWidth: '300px' }}>

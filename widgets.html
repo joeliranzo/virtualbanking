@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combined Widgets</title>
+  <!-- Cargar React y ReactDOM como globales -->
+  <script src="https://cdn.jsdelivr.net/npm/react@17/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@17/umd/react-dom.production.min.js"></script>
+  <!-- Cargar los widgets empaquetados en formato UMD -->
+  <script src="./dist/widget-a/widget-a.umd.js"></script>
+  <script src="./dist/widget-b/widget-b.umd.js"></script>
+</head>
+<body>
+  <div style="display: flex; gap: 20px; padding: 20px;">
+    <div>
+      <h2>Widget A</h2>
+      <div id="widget-a-container"></div>
+    </div>
+    <div>
+      <h2>Widget B</h2>
+      <div id="widget-b-container"></div>
+    </div>
+  </div>
+  <script>
+    // Renderizar el Widget A
+    const widgetAContainer = document.getElementById('widget-a-container');
+    ReactDOM.render(React.createElement(WidgetA), widgetAContainer);
+
+    // Renderizar el Widget B
+    const widgetBContainer = document.getElementById('widget-b-container');
+    ReactDOM.render(React.createElement(WidgetB), widgetBContainer);
+  </script>
+</body>
+</html>

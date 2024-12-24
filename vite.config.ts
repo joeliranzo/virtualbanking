@@ -2,36 +2,67 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-export default defineConfig(() => {
-  return {
-    plugins: [react()],
-    build: {
-      rollupOptions: {
-        external: ['react', 'react-dom'],
-        output: {
-          globals: {
-            react: 'React',
-            'react-dom': 'ReactDOM',
+// https://vitejs.dev/config/
+export default defineConfig(({ command, mode }) => {
+  if (command === 'build') {
+    if (mode === 'widget-a') {
+      return {
+        plugins: [react()],
+        build: {
+          lib: {
+            entry: path.resolve(__dirname, 'src/widgets/WidgetA.tsx'),
+            name: 'WidgetA',
+            fileName: (format) => `widget-a.${format}.js`,
+            formats: ['umd'], // Solo UMD para compatibilidad global
           },
-          preserveModules: true,
+          rollupOptions: {
+            external: ['react', 'react-dom'],
+            output: {
+              globals: {
+                react: 'React',
+                'react-dom': 'ReactDOM',
+              },
+            },
+          },
+          outDir: 'dist/widget-a',
         },
-      },
-      lib: {
-        entry: {
-          'widget-a': path.resolve(__dirname, 'src/widgets/WidgetA.tsx'),
-          'widget-b': path.resolve(__dirname, 'src/widgets/WidgetB.tsx'),
+        define: {
+          'process.env.NODE_ENV': JSON.stringify('production'),
         },
-        name: 'Widgets',
-        fileName: (format, entryName) => `${entryName}.${format}.js`,
-      },
-      outDir: 'dist',
-    },
-    optimizeDeps: {
-      include: ['react', 'react-dom'],
-    },
-    base: './',
-    define: {
-      'process.env': {},
-    },
-  };
+      };
+    }
+
+    if (mode === 'widget-b') {
+      return {
+        plugins: [react()],
+        build: {
+          lib: {
+            entry: path.resolve(__dirname, 'src/widgets/WidgetB.tsx'),
+            name: 'WidgetB',
+            fileName: (format) => `widget-b.${format}.js`,
+            formats: ['umd'], // Solo UMD para compatibilidad global
+          },
+          rollupOptions: {
+            external: ['react', 'react-dom'],
+            output: {
+              globals: {
+                react: 'React',
+                'react-dom': 'ReactDOM',
+              },
+            },
+          },
+          outDir: 'dist/widget-b',
+        },
+        define: {
+          'process.env.NODE_ENV': JSON.stringify('production'), 
+        },
+      };
+    }
+
+    return {}; 
+  } else {
+    return {
+        plugins: [react()],
+      }
+  }
 });
